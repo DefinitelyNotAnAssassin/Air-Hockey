@@ -57,7 +57,7 @@ var router = function(request, response) {
 			response.write(FileLoader.gamecss);
 			break;
 
-		case '/static/css/game_controller.js':
+		case '/static/js/game_controller.js':
 			response.writeHead(200, {"Content-Type": "text/javascript"});
 			response.write(FileLoader.game_controllerjs);
 			break;
