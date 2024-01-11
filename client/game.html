@@ -64,7 +64,7 @@
 				img: new Image()
 			};
 			var otherUser = { // info about the other enemy user
-				username: "",
+				username: "Score",
 				pos: {
 					x: -64,
 					y: -64
@@ -121,7 +121,7 @@
 					// retrieve the username from the entry field to send to server
 					user.username = document.querySelector('#username');
                     if (user.username === null) {
-                        user.username = 'user' + Math.floor(Math.random()*1000000);
+                        user.username = "Score ";
                     }
                     else{ 
                         user.username = document.querySelector('#username').value;
@@ -279,12 +279,12 @@
 					if (side.is === 0) {
 						ctx.fillText(user.username + ": " + user.points, 5, 25);
 						ctx.textAlign = "end";
-						ctx.fillText(otherUser.points + " :" + otherUser.username, canvas.width - 5, 25);
+						ctx.fillText(otherUser.username + ": " + otherUser.points  , canvas.width - 5, 25);
 					}
 					else {
 						ctx.fillText(otherUser.username + ": " + otherUser.points, 5, 25);
 						ctx.textAlign = "end";
-						ctx.fillText(user.points + " :" + user.username, canvas.width - 5, 25);
+						ctx.fillText(user.username + " : " + user.points, canvas.width - 5, 25);
 					}
 				ctx.restore();
 				
@@ -348,18 +348,15 @@
 
 
 
-<div id="canvasContainer">
-	<canvas id = "canvas">Please update to an HTML5 compatible web browser :</canvas>
+<div id="canvasContainer" class="w-screen h-screen flex justify-center">
+	<canvas id="canvas" canvas width="1280" height="800">Please update to an HTML5 compatible web browser :</canvas>
 </div>
 
 
 		<script> 
 
 			const canvas = document.getElementById("canvas")
-			var sizeWidth = document.body.offsetWidth * 0.99;
-			var sizeHeight = document.body.offsetHeight;
-			canvas.width = sizeWidth 
-			canvas.height = sizeHeight
+			
 			
 
 

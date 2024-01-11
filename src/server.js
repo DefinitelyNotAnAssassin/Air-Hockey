@@ -194,13 +194,14 @@ socket.on('join', function(data) {
 socket.on('disconnect', function() {
     // Retrieve the location associated with the disconnected user
     var location = socket.location;
-
+    console.log('User ' + socket.name + ' disconnected from location ' + location);
+    console.log(availableGames)
     // Remove the location from the availableGames array
-    var index = availableGames.indexOf(location);
+    var index = availableGames.findIndex(game => game.location === location);
     if (index !== -1) {
+        console.log('Removing location ' + location + ' from availableGames')
         availableGames.splice(index, 1);
     }
-
     usersByLocation[location] = []
 
     // Emit the updated availableGames array to all connected clients

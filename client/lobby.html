@@ -63,7 +63,12 @@
             console.log(data)
             const availableGames = document.getElementById("availableGames") 
             // iterate through the available games and make it a href to /game/:code
-
+            if (data.games.length == 0) {
+                availableGames.innerHTML = "No available games"
+            }
+            else{
+                availableGames.innerHTML = "Available Games: " 
+            }
             for (let i = 0; i < data.games.length; i++) {
                 const location = data.games[i].location
                 const user = data.games[i].user
