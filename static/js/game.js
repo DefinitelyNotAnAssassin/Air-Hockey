@@ -255,6 +255,18 @@ function update() {
     
     // emit our position to the other user
     socket.emit("update", {pos: user.pos})
+
+    socket.on("gameComplete", function(data) {
+
+
+    const body = document.querySelector("body")
+    const menu = document.createElement("div")
+    menu.id = "menu"
+    menu.classList.add("absolute", "top-1/2", "left-1/2", "transform", "-translate-x-1/2", "-translate-y-1/2")
+    
+    menu.innerHTML = `<a href = "/lobby" class = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Return to lobby</a>`
+    body.appendChild(menu)
+    })
     
     // draw the current notification from the server
     if (notification != "") {
@@ -287,4 +299,4 @@ function bouncePuck() {
 
 
 window.onload = init;
-})();
+})();   

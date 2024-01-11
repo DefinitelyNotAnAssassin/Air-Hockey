@@ -60,7 +60,7 @@ var usersByLocation = {};
 /* createGame
 	desc: creates a new game from the first two users in the queue
 */
-function createGame(location, userQueue) {
+function createGame(location, userQueue, io) {
     var roomName = "room" + curRoomNum;
     ++curRoomNum;
 
@@ -70,11 +70,9 @@ function createGame(location, userQueue) {
     userQueue[0].join(roomName);
     userQueue[1].join(roomName);
 
-    // delete from availableGames 
-    if (availableGames.includes(location)) {
-        availableGames.splice(availableGames.indexOf(location), 1);
-    }
-
+    console.log(availableGames)
+    availableGames = availableGames.filter(game => game.location !== location)
+    
     var newGame = new GameManager(roomName, io, userQueue[0], userQueue[1]);
     currentGames.push(newGame);
 
@@ -181,8 +179,10 @@ socket.on('join', function(data) {
 
     // If there are at least two users in the userQueue for this location, create a game
     if (usersByLocation[location].length >= 2) {
-        createGame(location, usersByLocation[location]);
+        createGame(location, usersByLocation[location], io);
         io.emit('startgame')
+        io.emit('getGamesResult', { games: availableGames });
+
     }
 });
 

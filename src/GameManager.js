@@ -360,7 +360,8 @@ class GameManager {
 			if (this.p1.score >= 10 || this.p2.score >= 10) {
 				this.notifyUsers("Game Complete", -1);
 				this.gameComplete = true;
-			}
+				this.io.emit("gameComplete")
+			} 
 			// nobody has won, continue
 			else {
 				// send a resume sequence to the players
