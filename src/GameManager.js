@@ -17,7 +17,7 @@ class GameManager {
 		this.io = io;	
 		this.p1 = p1;
 		this.p2 = p2;
-		
+		console.log(p1.name + " and " + p2.name + " are playing in room " + room);
 		//== General game variables ==//
 		// hard coded game room size variables based on canvas sent to clients
 		this.gW = 1280;	// game width

@@ -161,7 +161,7 @@ socket.on('join', function(data) {
     
 
     // Continue with the rest of your code if authentication is successful
-    socket.username = username;
+    socket.name = username;
     socket.location = location;
     users[username] = socket.name;
 
@@ -172,15 +172,17 @@ socket.on('join', function(data) {
 
     // Check if the user is already in the userQueue for this location
     if (!usersByLocation[location].some(user => user.username === username)) {
-        usersByLocation[location].push(socket);
+        usersByLocation[location].push(socket)
+
     } 
     console.log('User ' + username + ' joined location ' + location)
-    socket.emit('msg', { msg: 'Searching for another user to play with...' });
+    socket.emit('msg', { msg: 'Waiting for oponent...' });
     socket.emit('joinSuccess');
 
     // If there are at least two users in the userQueue for this location, create a game
     if (usersByLocation[location].length >= 2) {
         createGame(location, usersByLocation[location]);
+        io.emit('startgame')
     }
 });
 
