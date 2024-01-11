@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="h-screen w-screen flex justify-center items-center flex-col">
+        <h1 class="text-4xl font-bold mb-8">Air Hockey Lobby</h1>
+        <div class="bg-white shadow-lg rounded-lg p-8 w-1/2">
+            <p id="availableGames" class="text-lg mb-4">Available Games: </p>
+            <button id="create_lobby" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mb-4">
+                Create Lobby
+            </button>
+            <input type="text" name="lobby_code" placeholder="Enter Lobby Code" id="lobby_code" class="bg-gray-200 focus:bg-white border border-gray-300 focus:border-blue-500 rounded py-2 px-4 w-full mb-4">
+            <button id="join_lobby" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+                Join Lobby
+            </button>
+        </div>
+    </div>
+
+    <script> 
+        const uuid = () => {
+            return 'xxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            })
+        }
+
+        const createLobby = document.getElementById("create_lobby")
+        createLobby.addEventListener("click", (e) => {
+            e.preventDefault()
+            const code = uuid()
+            window.location.href = "/game/" + code
+
+        })
+
+        const lobby_code = document.getElementById("lobby_code")
+        const join_lobby = document.getElementById("join_lobby")
+
+        join_lobby.addEventListener("click", (e) => {
+            e.preventDefault()
+            const code = lobby_code.value
+            window.location.href = "/game/" + code
+        })
+
+        const socket = io.connect(); 
+        socket.emit('getGames', {} )
+
+        socket.on('getGamesResult', function(data) {
+            console.log(data)
+            const availableGames = document.getElementById("availableGames") 
+            // iterate through the available games and make it a href to /game/:code
+
+            for (let i = 0; i < data.games.length; i++) {
+                const location = data.games[i].location
+                const user = data.games[i].user
+                const a = document.createElement("a")
+                a.href = "/game/" + location
+                a.innerHTML = user + ", "
+                a.classList.add("text-blue-500", "hover:text-blue-700", "font-bold", "mr-2")
+                availableGames.appendChild(a)
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>
+
+
