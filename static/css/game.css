@@ -1,0 +1,16 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, p {
+    text-align: center;
+}
+
+
+
+#canvasContainer {
+
+    width: 100%;
+    text-align: center;
+}
+
